@@ -2225,8 +2225,9 @@
                 DONATION_LABELS[p.donationType]||p.donationType||'—',
                 p.donationDesc, p.note, p.ts
             ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(';'));
-            // "sep=;" в первой строке заставляет Excel использовать ";" как разделитель колонок
-            const csv = '\uFEFF' + 'sep=;\r\n' + [headers.join(';'), ...rows].join('\r\n');
+            // BOM (\uFEFF) в самом начале включает UTF-8 (кириллица без кракозябр),
+            // разделитель ";" — стандарт для CSV в русской локали Excel
+            const csv = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
             downloadBlob(csv, 'text/csv;charset=utf-8;', 'uchastniki_tennis_gulliver.csv');
         }
 
