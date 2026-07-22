@@ -564,7 +564,7 @@
 
         .form-row.full { grid-template-columns: 1fr; }
         .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
-        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
         .field label {
             font-family: 'Oswald', sans-serif;
             font-size: 11px;
@@ -586,6 +586,8 @@
             border-radius: 4px;
             -webkit-appearance: none;
             appearance: none;
+            width: 100%;
+            max-width: 100%;
         }
 
         .field input:focus, .field select:focus, .field textarea:focus {
@@ -1113,6 +1115,12 @@
             .filter-row select, .filter-row input,
             .admin-lock input[type=password] {
                 font-size: 16px;
+            }
+
+            /* Крупнее чекбоксы — удобнее попадать пальцем */
+            .agree-block input[type=checkbox] {
+                width: 22px;
+                height: 22px;
             }
         }
 
@@ -2217,8 +2225,8 @@
                 DONATION_LABELS[p.donationType]||p.donationType||'—',
                 p.donationDesc, p.note, p.ts
             ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(';'));
-            // Разделитель ";" — русский Excel корректно разбивает колонки
-            const csv = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
+            // "sep=;" в первой строке заставляет Excel использовать ";" как разделитель колонок
+            const csv = '\uFEFF' + 'sep=;\r\n' + [headers.join(';'), ...rows].join('\r\n');
             downloadBlob(csv, 'text/csv;charset=utf-8;', 'uchastniki_tennis_gulliver.csv');
         }
 
