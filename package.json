@@ -1,0 +1,12 @@
+{
+  "name": "gulliver-tennis",
+  "version": "1.0.0",
+  "description": "Первенство по настольному теннису — Парк Гулливер, Донецк",
+  "private": true,
+  "dependencies": {
+    "@vercel/kv": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

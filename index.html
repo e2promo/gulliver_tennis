@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Первенство по настольному теннису — Парк Гулливер, Донецк</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400,500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green: #1a5c2a;
+            --green-mid: #2d8048;
+            --green-light: #e8f4ec;
+            --gold: #c8901a;
+            --gold-light: #fdf4e3;
+            --ink: #1a1a18;
+            --ink-mid: #3d3d38;
+            --ink-muted: #6b6b62;
+            --border: #d0cfc6;
+            --bg: #f7f6f0;
+            --white: #ffffff;
+            --fs-min: 14;
+            --fs-max: 16;
+            --fw-min: 320;
+            --fw-max: 1200;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: min(100%, 750px);
+            padding-inline: clamp(1rem, 2vw, 1.5rem);
+            margin-inline: auto;
+        }
+
+        nav {
+            background: var(--green);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border-bottom: 3px solid var(--gold);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        nav::-webkit-scrollbar { display: none; }
+        nav button {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(11px, 0.7rem + 0.3vw, 13px);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: clamp(10px, 2vw, 14px) clamp(12px, 2vw, 22px);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        nav button:hover { color: #fff; }
+        nav button.active { color: #fff; border-bottom-color: var(--gold); }
+        nav .brand {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(11px, 0.7rem + 0.3vw, 13px);
+            color: rgba(255,255,255,0.45);
+            padding: 0 clamp(12px, 2vw, 16px) 0 clamp(16px, 2vw, 20px);
+            border-right: 1px solid rgba(255,255,255,0.15);
+            margin-right: 8px;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        /* PAGES */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ============= ПЕРВАЯ СТРАНИЦА: ОБЪЯВЛЕНИЕ ============= */
+        .poster {
+            max-width: 780px;
+            margin: clamp(24px, 4vw, 48px) auto;
+            padding: 0 clamp(12px, 2vw, 20px) clamp(32px, 5vw, 60px);
+        }
+
+        .poster-header {
+            background: var(--green);
+            color: white;
+            text-align: center;
+            padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 32px) clamp(20px, 3vw, 32px);
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .poster-header::before,
+        .poster-header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 24px, transparent 24px, transparent 32px);
+        }
+
+        .poster-header::after { bottom: 0; }
+
+        .eyebrow {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .poster-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(28px, 2.2rem + 2vw, 52px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+
+        .poster-subtitle {
+            font-family: 'PT Serif', serif;
+            font-style: italic;
+            font-size: clamp(16px, 1rem + 0.5vw, 20px);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 24px;
+        }
+
+        .poster-badge {
+            display: inline-block;
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 4px;
+        }
+
+        .poster-body {
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            border-top: none;
+            padding: clamp(24px, 4vw, 40px) clamp(20px, 3vw, 40px);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 0.5px solid var(--border);
+            margin-bottom: 36px;
+            border-radius: 8px;
+        }
+
+        .info-cell {
+            background: var(--white);
+            padding: clamp(14px, 2.5vw, 20px) clamp(16px, 2.5vw, 24px);
+        }
+
+        .info-cell .label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        .info-cell .value {
+            font-family: 'PT Serif', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .info-cell .sub {
+            font-size: 13px;
+            color: var(--ink-muted);
+            margin-top: 3px;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            border-bottom: 1.5px solid var(--green-light);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            margin-top: 32px;
+        }
+
+        .prize-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 0.5px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .prize-row:last-child { border-bottom: none; }
+        .prize-place {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .prize-place.gold { background: #fdf4e3; color: #b8860b; border: 1.5px solid #c8901a; }
+        .prize-place.silver { background: #f0f0f0; color: #666; border: 1.5px solid #aaa; }
+        .prize-place.bronze { background: #fdf0ea; color: #9b5a2a; border: 1.5px solid #c8763a; }
+        .prize-text { font-size: 15px; color: var(--ink); }
+        .prize-text strong { font-weight: 500; }
+
+        .categories-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .categories-list li {
+            background: var(--green-light);
+            border-left: 3px solid var(--green);
+            padding: 10px 14px;
+            font-size: 14px;
+            color: var(--ink);
+            line-height: 1.4;
+            border-radius: 6px;
+        }
+
+        .categories-list li span {
+            display: block;
+            font-size: 11px;
+            color: var(--green-mid);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 3px;
+        }
+
+        .contact-block {
+            background: var(--gold-light);
+            border: 0.5px solid #e8d5a0;
+            padding: clamp(16px, 3vw, 20px) clamp(18px, 3vw, 24px);
+            margin-top: 32px;
+            display: flex;
+            align-items: center;
+            gap: clamp(16px, 3vw, 24px);
+            flex-wrap: wrap;
+            border-radius: 8px;
+        }
+
+        .contact-block .c-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        .contact-block .c-val {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .contact-block .c-item { flex: 1; min-width: 140px; }
+
+        .poster-footer {
+            background: var(--green);
+            color: rgba(255,255,255,0.65);
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .poster-footer strong { color: rgba(255,255,255,0.9); }
+
+        /* Стили для активной кнопки регистрации */
+        .register-now-btn {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 15px 32px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(201, 144, 26, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-top: 24px;
+            width: auto;
+        }
+
+        .register-now-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .register-now-btn:hover {
+            background: #d4a61a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(201, 144, 26, 0.4);
+        }
+
+        .register-now-btn:hover::before {
+            left: 100%;
+        }
+
+        .register-now-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(201, 144, 26, 0.3);
+        }
+
+        /* ============= ВТОРАЯ СТРАНИЦА: УСТАВ ============= */
+        .charter {
+            max-width: 780px;
+            margin: clamp(24px, 4vw, 48px) auto;
+            padding: 0 clamp(12px, 2vw, 20px) clamp(32px, 5vw, 60px);
+        }
+
+        .charter-header {
+            text-align: center;
+            padding: clamp(24px, 4vw, 40px) clamp(16px, 3vw, 32px) clamp(24px, 4vw, 40px);
+            border-bottom: 2px solid var(--green);
+            margin-bottom: clamp(24px, 4vw, 40px);
+            background: linear-gradient(135deg, var(--green-light) 0%, var(--white) 100%);
+            border-radius: 8px;
+        }
+
+        .charter-header .org {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 12px;
+        }
+
+        .charter-header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(22px, 1.6rem + 1.5vw, 32px);
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .charter-header .doc-meta {
+            font-family: 'PT Serif', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--ink-muted);
+        }
+
+        .charter-section {
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            margin-bottom: 16px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .charter-section-head {
+            background: var(--green);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .cs-num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            min-width: 28px;
+        }
+
+        .cs-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .charter-body {
+            padding: 20px 24px;
+        }
+
+        .charter-body p, .charter-body li {
+            font-size: 14.5px;
+            line-height: 1.75;
+            color: var(--ink-mid);
+            margin-bottom: 8px;
+        }
+
+        .charter-body ul, .charter-body ol {
+            padding-left: 20px;
+        }
+
+        .charter-body ol li { list-style: decimal; }
+        .charter-body ul li { list-style: disc; }
+        .charter-body li:last-child { margin-bottom: 0; }
+        .charter-body strong { color: var(--ink); font-weight: 500; }
+
+        .charter-body .note {
+            background: var(--gold-light);
+            border-left: 3px solid var(--gold);
+            padding: 12px 16px;
+            font-size: 13.5px;
+            color: var(--ink-mid);
+            margin-top: 12px;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .score-table th {
+            background: var(--green-light);
+            color: var(--green);
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1.5px solid var(--green);
+        }
+
+        .score-table td {
+            padding: 9px 12px;
+            border-bottom: 0.5px solid var(--border);
+            color: var(--ink-mid);
+        }
+
+        .score-table tr:last-child td { border-bottom: none; }
+        .sign-block {
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            padding: clamp(20px, 3vw, 28px) clamp(20px, 3vw, 32px);
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 4vw, 40px);
+            border-radius: 8px;
+        }
+
+        .sign-line {
+            border-top: 0.5px solid var(--ink-muted);
+            padding-top: 8px;
+            font-size: 12px;
+            color: var(--ink-muted);
+        }
+
+        /* ============= ТРЕТЬЯ СТРАНИЦА: РЕГИСТРАЦИЯ ============= */
+        .reg-page {
+            max-width: 780px;
+            margin: clamp(24px, 4vw, 48px) auto;
+            padding: 0 clamp(12px, 2vw, 20px) clamp(32px, 5vw, 60px);
+        }
+
+        .reg-header {
+            background: var(--green);
+            color: white;
+            padding: clamp(24px, 4vw, 32px) clamp(20px, 3vw, 40px) clamp(20px, 3vw, 28px);
+            border-bottom: 3px solid var(--gold);
+            margin-bottom: 0;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .reg-header .eyebrow {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .reg-header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(22px, 1.6rem + 1.5vw, 30px);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .reg-header p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .reg-form-wrap {
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            border-top: none;
+            padding: clamp(24px, 4vw, 36px) clamp(20px, 3vw, 40px);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+        }
+
+        .field label .req { color: var(--gold); margin-left: 2px; }
+        .field input, .field select, .field textarea {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            color: var(--ink);
+            background: var(--white);
+            outline: none;
+            transition: border-color 0.15s;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .field input:focus, .field select:focus, .field textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26,92,42,0.08);
+        }
+
+        .field select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6b62' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field .hint {
+            font-size: 11.5px;
+            color: var(--ink-muted);
+            line-height: 1.5;
+        }
+
+        .form-divider {
+            border: none;
+            border-top: 1.5px solid var(--green-light);
+            margin: 28px 0 24px;
+        }
+
+        .form-section-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 20px;
+        }
+
+        .agree-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .agree-block input[type=checkbox] {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            accent-color: var(--green);
+            margin-top: 2px;
+        }
+
+        .agree-block label {
+            font-size: 13px;
+            color: var(--ink-mid);
+            line-height: 1.6;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: var(--green);
+            color: white;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 15px 48px;
+            cursor: pointer;
+            transition: background 0.15s;
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .submit-btn:hover { background: var(--green-mid); }
+        .submit-btn:active { transform: scale(0.99); }
+
+        .success-msg {
+            display: none;
+            background: #e8f4ec;
+            border: 1.5px solid var(--green);
+            padding: 24px 28px;
+            text-align: center;
+            margin-top: 24px;
+            border-radius: 8px;
+        }
+
+        .success-msg h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .success-msg p {
+            font-size: 14px;
+            color: var(--ink-mid);
+            line-height: 1.6;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 28px;
+            color: var(--ink-muted);
+            font-size: 13.5px;
+            border: 0.5px solid var(--border);
+            background: var(--white);
+            border-radius: 8px;
+        }
+
+        /* ============= ЛИГА: ДОБАВЛЕННАЯ ЛОГИКА ============= */
+        /* Добавлен стиль для правильной работы навигации */
+        nav button.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Улучшенный дизайн кнопок в форме регистрации */
+        .field input, .field select, .field textarea {
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .field input:focus, .field select:focus, .field textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26, 92, 42, 0.1);
+        }
+
+        /* Наведение для кнопок формы */
+        .submit-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .submit-btn:hover {
+            background: var(--green-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(26, 92, 42, 0.2);
+        }
+
+        /* ============= ЧЕТВЕРТАЯ СТРАНИЦА: АДМИНКА ============= */
+        .admin-lock {
+            max-width: 420px;
+            margin: clamp(40px, 8vw, 80px) auto;
+            padding: 0 clamp(16px, 3vw, 20px);
+            text-align: center;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-lock .lock-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 28px;
+            box-shadow: 0 4px 6px rgba(26, 92, 42, 0.3);
+        }
+
+        .admin-lock h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .admin-lock p {
+            font-size: 13.5px;
+            color: var(--ink-muted);
+            margin-bottom: 24px;
+        }
+
+        .admin-lock input[type=password] {
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            border: 2px solid var(--border);
+            padding: 12px 16px;
+            color: var(--ink);
+            background: var(--white);
+            outline: none;
+            text-align: center;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .admin-lock input[type=password]:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(26, 92, 42, 0.1);
+        }
+
+        .admin-lock .login-btn {
+            width: 100%;
+            background: var(--green);
+            color: white;
+            border: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 13px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-lock .login-btn:hover {
+            background: var(--green-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(26, 92, 42, 0.3);
+        }
+
+        .admin-lock .lock-err {
+            display: none;
+            background: #fcebeb;
+            border-left: 4px solid #e24b4a;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #501313;
+            text-align: left;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+
+        .admin-panel {
+            display: none;
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            border-radius: 12px;
+            padding: clamp(24px, 4vw, 40px);
+            margin-top: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-panel.visible { display: block; }
+
+        .admin-panel-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .admin-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .admin-topbar h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            color: var(--green);
+            letter-spacing: 0.05em;
+        }
+
+        .admin-topbar .logout-btn {
+            background: none;
+            border: 1px solid var(--border);
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            cursor: pointer;
+            color: var(--ink-muted);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-topbar .logout-btn:hover {
+            border-color: var(--ink-muted);
+            color: var(--ink);
+            background: var(--green-light);
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 0.5px solid var(--border);
+            padding: 18px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-color: var(--green-light);
+        }
+
+        .stat-card .s-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .s-val {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(22px, 1.6rem + 1vw, 28px);
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1;
+        }
+
+        .stat-card .s-sub {
+            font-size: 12px;
+            color: var(--ink-muted);
+            margin-top: 4px;
+        }
+
+        .prize-fund-block {
+            background: var(--gold-light);
+            border: 1px solid #e8d5a0;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(201, 144, 26, 0.1);
+        }
+
+        .prize-fund-block h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .prize-dist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .prize-dist-item {
+            background: var(--white);
+            border: 0.5px solid #e8d5a0;
+            padding: 14px 16px;
+            text-align: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .prize-dist-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(201, 144, 26, 0.2);
+        }
+
+        .prize-dist-item .pd-place {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 6px;
+        }
+
+        .prize-dist-item .pd-pct {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(18px, 1.3rem + 0.8vw, 22px);
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .prize-dist-item .pd-amt {
+            font-size: 13px;
+            color: var(--ink);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .prize-fund-note {
+            font-size: 12.5px;
+            color: var(--ink-muted);
+            margin-top: 14px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .admin-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .admin-toolbar h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--green);
+        }
+
+        .admin-toolbar .toolbar-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .admin-table-wrap { overflow-x: auto; }
+        #admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 900px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #admin-table th {
+            background: var(--green);
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 10px 12px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        #admin-table td {
+            padding: 9px 12px;
+            border-bottom: 0.5px solid var(--border);
+            color: var(--ink-mid);
+            vertical-align: top;
+        }
+
+        #admin-table tr:nth-child(even) td { background: var(--bg); }
+        #admin-table tr:last-child td { border-bottom: none; }
+        #admin-table tr:hover td { background: var(--green-light); }
+
+        #admin-table .del-btn {
+            background: none;
+            border: none;
+            color: #a32d2d;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 4px;
+            line-height: 1;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        #admin-table .del-btn:hover {
+            color: #501313;
+            background: #fcebeb;
+        }
+
+        .donation-tag {
+            display: inline-block;
+            background: var(--gold-light);
+            border: 0.5px solid #e8d5a0;
+            color: #7a5800;
+            font-size: 11px;
+            padding: 2px 8px;
+            white-space: nowrap;
+            border-radius: 4px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            background: var(--green-light);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .filter-row select, .filter-row input {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            padding: 7px 12px;
+            color: var(--ink);
+            background: var(--white);
+            outline: none;
+            border-radius: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            min-width: 150px;
+        }
+
+        .filter-row select:focus, .filter-row input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26,92,42,0.1);
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 900px) {
+            .admin-topbar h2 { font-size: 18px; }
+        }
+
+        @media (max-width: 768px) {
+            .info-grid, .categories-list, .form-row, .sign-block { grid-template-columns: 1fr; }
+            .form-row.three { grid-template-columns: 1fr 1fr; }
+            .prize-row { gap: 12px; }
+        }
+
+        @media (max-width: 600px) {
+            .poster-title { font-size: clamp(28px, 8vw, 36px); }
+            .poster-body, .reg-form-wrap { padding: 24px 20px; }
+            .stat-card { padding: 14px 16px; }
+            .admin-topbar { flex-direction: column; align-items: flex-start; }
+            .admin-topbar h2 { font-size: 17px; }
+            .filter-row select, .filter-row input { flex: 1 1 100%; }
+            .contact-block .c-item { flex: 1 1 100%; min-width: 100%; }
+            .charter-body { padding: 16px; }
+            .charter-section-head { padding: 10px 16px; gap: 10px; }
+            .cs-num { font-size: 18px; min-width: 24px; }
+        }
+
+        @media (max-width: 420px) {
+            nav .brand { display: none; }
+            .form-row.three { grid-template-columns: 1fr; }
+            .poster-title { font-size: 28px; }
+            .submit-btn { padding: 15px 20px; }
+            .info-cell { padding: 12px 14px; }
+            .categories-list li { padding: 8px 12px; }
+            .prize-row { gap: 12px; }
+            .prize-text { font-size: 14px; }
+            .admin-topbar h2 { font-size: 15px; }
+        }
+
+        @media print {
+            nav { display: none; }
+            .page { display: block !important; }
+            body { background: white; }
+        }
+
+        /* Футер с кнопкой регистрации */
+        .poster-footer-with-register {
+            background: var(--green);
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            padding: 24px;
+            margin-top: 32px;
+            border-radius: 8px;
+        }
+
+        .poster-footer-with-register .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .poster-footer-with-register .footer-text {
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .poster-footer-with-register .register-now-footer {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 12px 32px;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(201, 144, 26, 0.3);
+        }
+
+        .poster-footer-with-register .register-now-footer:hover {
+            background: #d4a61a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(201, 144, 26, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button class="active" onclick="showPage('poster')">📣 Объявление</button>
+        <button onclick="showPage('charter')">📋 Устав / Регламент</button>
+        <button onclick="showPage('reg')">✍️ Регистрация участников</button>
+        <button onclick="showPage('admin')" style="margin-left:auto;opacity:0.6;">🔐 Админ</button>
+    </nav>
+
+    <!-- ПЕРВАЯ СТРАНИЦА: ОБЪЯВЛЕНИЕ -->
+    <div class="page active" id="page-poster">
+        <div class="poster">
+            <div class="poster-header">
+                <div class="eyebrow">Парк культуры и отдыха «Гулливер» · Донецк, ДНР</div>
+                <div class="poster-title">Первенство<br>по настольному<br>теннису</div>
+                <div class="poster-subtitle">Открытый городской турнир среди любителей и профессионалов</div>
+
+                <!-- КНОПКА РЕГИСТРАЦИИ В ШАПКЕ -->
+                <div style="text-align:center; margin-top:16px;">
+                    <a href="#page-reg" class="register-now-btn" onclick="showPage('reg'); return false;">ЗАРЕГИСТРИРОВАТЬСЯ</a>
+                </div>
+
+                <div class="poster-badge">Все возрасты · Все уровни</div>
+            </div>
+
+            <div class="poster-body">
+                <div class="info-grid">
+                    <div class="info-cell">
+                        <div class="label">Место проведения</div>
+                        <div class="value">Парк «Гулливер»</div>
+                        <div class="sub">г. Донецк, ДНР — летняя спортивная площадка</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="label">Дата и время</div>
+                        <div class="value">22–23 августа 2026 г.</div>
+                        <div class="sub">Начало в 17:00 (парк Гулливер, Донецк)</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="label">Благотворительный взнос</div>
+                        <div class="value">Добровольный</div>
+                        <div class="sub">Любой вид — деньги, призы, инвентарь, угощение</div>
+                    </div>
+                    <div class="info-cell">
+                        <div class="label">Приём заявок до</div>
+                        <div class="value">20 августа 2026 г.</div>
+                        <div class="sub">Форма регистрации — на странице «Регистрация»</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Программа турнира</div>
+                <ul class="categories-list">
+                    <li><span>Любители</span>одиночный разряд — все возрасты</li>
+                    <li><span>Профессионалы</span>соревнования среди спортсменов с разрядами</li>
+                    <li><span>Пары любители</span>парный разряд — любительский уровень (М+М и М+Ж)</li>
+                    <li><span>Пары профессионалы</span>парный разряд — спортивные разряды (М+М и М+Ж)</li>
+                </ul>
+                <div style="background:var(--green);color:#fff;border-radius:8px;padding:16px 20px;margin-top:14px;display:flex;align-items:center;gap:14px;">
+                    <div style="font-size:26px;line-height:1;">🏆</div>
+                    <div>
+                        <div style="font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Супер-финал</div>
+                        <div style="font-size:14px;line-height:1.5;">Победитель разряда <strong>«Любители»</strong> встречается с победителем разряда <strong>«Профессионалы»</strong> в решающем матче за звание абсолютного чемпиона турнира.</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Призовой фонд</div>
+                <div style="background:var(--gold-light);border:0.5px solid #e8d5a0;padding:16px 20px;margin-bottom:16px;">
+                    <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Как формируется призовой фонд</div>
+                    <p style="font-size:14px;color:var(--ink-mid);line-height:1.7;">Призовой фонд формируется из <strong>добровольных благотворительных взносов участников</strong> — деньги, призы, спортивный инвентарь, угощение и любые другие вклады. Все взносы объединяются и распределяются между победителями пропорционально занятому месту.</p>
+                </div>
+                <div class="prize-row">
+                    <div class="prize-place gold">I</div>
+                    <div class="prize-text"><strong>50% призового фонда</strong></div>
+                </div>
+                <div class="prize-row">
+                    <div class="prize-place silver">II</div>
+                    <div class="prize-text"><strong>30% призового фонда</strong></div>
+                </div>
+                <div class="prize-row">
+                    <div class="prize-place bronze">III</div>
+                    <div class="prize-text"><strong>20% призового фонда</strong></div>
+                </div>
+                <div class="prize-row">
+                    <div class="prize-place" style="background:#f0f0f0;color:#888;border:1.5px solid #ccc;font-size:11px;">ВСЕ</div>
+                    <div class="prize-text">Все участники получают памятный сувенир из общего фонда</div>
+                </div>
+
+                <div class="section-title">О турнире</div>
+                <p style="font-size:15px;color:var(--ink-mid);line-height:1.8;">
+                    Первенство проводится с целью популяризации настольного тенниса среди жителей Донецка, выявления сильнейших игроков города, а также создания дружеской спортивной атмосферы для участников всех возрастов и уровней подготовки.
+                </p>
+                <p style="font-size:15px;color:var(--ink-mid);line-height:1.8;margin-top:12px;">
+                    К участию приглашаются все желающие — от новичков до опытных спортсменов. Необходимо иметь при себе документ, удостоверяющий личность, и пройти регистрацию в установленные сроки.
+                </p>
+
+                <div class="contact-block">
+                    <div class="c-item">
+                        <div class="c-label">Организаторы</div>
+                        <div class="c-val">Инициативная группа отдыхающих парка Гулливер</div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-label">По вопросам участия</div>
+                        <div class="c-val">Оргкомитет турнира</div>
+                    </div>
+                    <div class="c-item">
+                        <div class="c-label">Регистрация участников</div>
+                        <div class="c-val" style="color:var(--green);cursor:pointer;" onclick="showPage('reg')">→ Открыть форму</div>
+                    </div>
+                </div>
+
+                <div class="poster-footer" style="margin-top:32px;">
+                    <strong>Парк культуры и отдыха «Гулливер»</strong> · г. Донецк, Донецкая Народная Республика
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВТОРАЯ СТРАНИЦА: УСТАВ/РЕГЛАМЕНТ -->
+    <div class="page" id="page-charter">
+        <div class="charter">
+            <div class="charter-header">
+                <div class="org">Парк культуры и отдыха «Гулливер» · г. Донецк, ДНР</div>
+                <h1>Устав и Регламент<br>открытого первенства<br>по настольному теннису</h1>
+                <div class="doc-meta">Утверждён оргкомитетом турнира · Редакция 1.0</div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">1</span><span class="cs-title">Общие положения</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li><strong>Полное наименование:</strong> Открытое первенство по настольному теннису в парке культуры и отдыха «Гулливер» города Донецка.</li>
+                        <li>Соревнования проводятся на открытой площадке парка «Гулливер» в г. Донецке, ДНР.</li>
+                        <li>Турнир является открытым — к участию допускаются жители Донецка и ДНР любого возраста и уровня подготовки: любители и профессионалы.</li>
+                        <li>Даты проведения: <strong>22–23 августа 2026 г.</strong>, начало в <strong>17:00</strong>.</li>
+                        <li>Соревнования проводятся в соответствии с настоящим Регламентом и Правилами настольного тенниса Международной федерации ITTF.</li>
+                        <li>Организатором выступает инициативная группа отдыхающих парка «Гулливер».</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">2</span><span class="cs-title">Цели и задачи</span></div>
+                <div class="charter-body">
+                    <ul>
+                        <li>Популяризация настольного тенниса среди жителей Донецка всех возрастов.</li>
+                        <li>Выявление сильнейших игроков парка Гулливер.</li>
+                        <li>Создание условий для здоровой конкуренции, дружеского общения и обмена опытом между участниками.</li>
+                        <li>Привлечение молодёжи к систематическим занятиям спортом.</li>
+                        <li>Развитие инфраструктуры для любительского спорта на базе парка «Гулливер».</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">3</span><span class="cs-title">Участники и разряды</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>К участию допускаются все желающие без ограничений по возрасту и уровню подготовки.</li>
+                        <li>Турнир проводится в четырёх разрядах:</li>
+                    </ol>
+                    <table class="score-table" style="margin-top:12px;">
+                        <thead>
+                            <tr>
+                                <th>Разряд</th>
+                                <th>Участники</th>
+                                <th>Формат</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Любители</td><td>любительский уровень, все возрасты</td><td>Одиночный разряд</td></tr>
+                            <tr><td>Профессионалы</td><td>спортсмены с разрядами</td><td>Одиночный разряд</td></tr>
+                            <tr><td>Пары любители</td><td>любительский уровень (М+М и М+Ж)</td><td>Парный разряд</td></tr>
+                            <tr><td>Пары профессионалы</td><td>спортсмены с разрядами (М+М и М+Ж)</td><td>Парный разряд</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="note">Оргкомитет вправе объединять или разделять группы в зависимости от количества зарегистрировавшихся участников.</div>
+                    <ol start="3" style="margin-top:14px;">
+                        <li>Участники моложе 14 лет допускаются к соревнованиям только при наличии письменного согласия родителя или законного представителя.</li>
+                        <li>Для участия необходимо предъявить документ, удостоверяющий личность (паспорт, свидетельство о рождении, иной документ).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">4</span><span class="cs-title">Порядок регистрации и благотворительный взнос</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Регистрация участников проводится через форму на сайте или на месте проведения турнира в день мероприятия (при наличии свободных мест).</li>
+                        <li>Приём заявок в электронном виде осуществляется до <strong>20 августа 2026 г.</strong> включительно.</li>
+                        <li>При регистрации участник обязан указать: фамилию, имя, отчество; дату рождения; контактный телефон; опыт игры.</li>
+                        <li>Участник вправе зарегистрироваться в одиночном и парном разрядах одновременно (например, «Любители» + «Пары любители»).</li>
+                        <li>Оргкомитет подтверждает регистрацию в течение 24 часов после подачи заявки.</li>
+                        <li><strong>Благотворительный взнос.</strong> Участие в турнире является бесплатным. Каждый участник по желанию вносит добровольный благотворительный взнос в общий призовой фонд. Взнос может быть сделан в любом виде: денежные средства, спортивные призы, инвентарь, угощение для участников, иные материальные ценности.</li>
+                        <li>Взносы принимаются организаторами при регистрации на месте проведения или по предварительной договорённости с оргкомитетом.</li>
+                        <li>Состав и итоговая стоимость призового фонда объявляются перед началом турнира и публикуются на информационном стенде.</li>
+                        <li>Никакого минимального или обязательного взноса не установлено. Отсутствие взноса не является основанием для отказа в участии.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">5</span><span class="cs-title">Система проведения соревнований</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li><strong>Групповой этап:</strong> при наличии 5 и более участников в разряде проводится групповой этап по круговой системе. Из каждой группы в плей-офф выходят лучшие игроки согласно регламенту.</li>
+                        <li><strong>Плей-офф:</strong> стадия навылет — каждая партия до 2 или 3 побед (решает оргкомитет в зависимости от числа участников).</li>
+                        <li>Каждая партия — до 11 очков, победа засчитывается с разницей не менее 2 очков.</li>
+                        <li><strong>Супер-финал.</strong> По завершении одиночных разрядов победитель разряда «Любители» встречается с победителем разряда «Профессионалы» в отдельном показательном матче за звание абсолютного чемпиона турнира. Формат супер-финала (число партий) определяется оргкомитетом и объявляется до его начала.</li>
+                    </ol>
+                    <table class="score-table">
+                        <thead><tr><th>Результат матча</th><th>Победитель</th><th>Проигравший</th></tr></thead>
+                        <tbody>
+                            <tr><td>Победа в матче</td><td>2 очка</td><td>0 очков</td></tr>
+                            <tr><td>Неявка соперника</td><td>2 очка (walkover)</td><td>-1 очко</td></tr>
+                            <tr><td>Снятие по болезни</td><td>2 очка</td><td>0 очков</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="note">При равенстве очков в группе применяется личный счёт между командами, затем — разница партий, затем — разница мячей.</div>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">6</span><span class="cs-title">Инвентарь и оборудование</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Официальные теннисные столы предоставляются организаторами. Использование собственного стола не допускается.</li>
+                        <li>Мячи предоставляются организаторами (стандарт ITTF 40+ мм). Использование собственных мячей не допускается.</li>
+                        <li>Ракетка — личная. Ракетка должна соответствовать правилам ITTF: основание изготовлено из дерева, покрытие — одобренная ITTF резина.</li>
+                        <li>Главный судья вправе проверить ракетку участника до начала матча. В случае несоответствия участнику предлагается замена или дисквалификация.</li>
+                        <li>Спортивная одежда — на усмотрение участника. Рекомендуется удобная спортивная форма.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">7</span><span class="cs-title">Правила поведения и дисциплина</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Все участники обязаны соблюдать дух честной игры (fair play), уважительно относиться к соперникам, судьям и зрителям.</li>
+                        <li>Запрещены: употребление алкоголя и иных психоактивных веществ, грубость, оскорбления, намеренное затягивание игры.</li>
+                        <li>За нарушение правил судья вправе вынести предупреждение (жёлтая карточка), присудить очко сопернику (жёлтая + красная) или дисквалифицировать участника (красная).</li>
+                        <li>Решение судьи окончательная. Апелляция подаётся в письменном виде главному судье в течение 10 минут после окончания матча.</li>
+                        <li>Опоздание на матч более чем на 5 минут без уважительной причины засчитывается как техническое поражение.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">8</span><span class="cs-title">Награждение и распределение призового фонда</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Призовой фонд турнира формируется из совокупности добровольных благотворительных взносов всех участников (п. 4.6 настоящего Регламента).</li>
+                        <li>Призовой фонд распределяется между победителями и призёрами <strong>пропорционально занятому месту</strong> по следующей схеме:</li>
+                    </ol>
+                    <table class="score-table" style="margin:12px 0;">
+                        <thead><tr><th>Место</th><th>Доля призового фонда</th><th>Помимо доли фонда</th></tr></thead>
+                        <tbody>
+                            <tr><td>1-е место</td><td><strong>50%</strong></td><td>—</td></tr>
+                            <tr><td>2-е место</td><td><strong>30%</strong></td><td>—</td></tr>
+                            <tr><td>3-е место</td><td><strong>20%</strong></td><td>—</td></tr>
+                            <tr><td>Все участники</td><td>—</td><td>памятный сувенир</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="note">Итоговый расчёт и точный размер выплат по местам производятся оргкомитетом до начала церемонии награждения и объявляются публично.</div>
+                    <ol start="3">
+                        <li>Денежная часть призового фонда выдаётся наличными в момент церемонии награждения. Неденежные взносы (инвентарь, угощение и т.д.) распределяются между призовых мест по жребию или по решению оргкомитета.</li>
+                        <li>Церемония награждения проводится по завершении финальных матчей во всех разрядах. Информация о размере призового фонда публикуется на информационном стенде до начала турнира.</li>
+                        <li>Специальные призы (за красивый удар, за лучшую технику и т.п.) могут быть вручены по решению оргкомитета из резервной части фонда или отдельных пожертвований.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">9</span><span class="cs-title">Безопасность и ответственность</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Организаторы обеспечивают безопасные условия проведения соревнований в пределах площадки.</li>
+                        <li>Участники принимают участие в турнире добровольно и несут личную ответственность за своё здоровье.</li>
+                        <li>При наличии медицинских противопоказаний участник должен самостоятельно проконсультироваться с врачом.</li>
+                        <li>Организаторы не несут ответственности за травмы, полученные вследствие нарушения правил безопасности участником.</li>
+                        <li>На территории парка действуют общие правила поведения парка «Гулливер».</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">10</span><span class="cs-title">Обработка персональных данных</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Регистрируясь на турнир, участник даёт согласие на обработку и публикацию своих персональных данных (ФИО, возраст, результаты) в рамках освещения соревнований.</li>
+                        <li>Фото- и видеосъёмка на мероприятии осуществляется организаторами. Участие в турнире означает согласие на публикацию фото- и видеоматериалов с мероприятия.</li>
+                        <li>Персональные данные не передаются третьим лицам и используются исключительно в целях организации турнира.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="charter-section">
+                <div class="charter-section-head"><span class="cs-num">11</span><span class="cs-title">Заключительные положения</span></div>
+                <div class="charter-body">
+                    <ol>
+                        <li>Оргкомитет вправе вносить изменения в Регламент, уведомив участников не менее чем за 48 часов до начала турнира.</li>
+                        <li>Ситуации, не предусмотренные настоящим Регламентом, решаются главным судьём совместно с оргкомитетом.</li>
+                        <li>Настоящий Регламент вступает в силу с момента его утверждения оргкомитетом.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sign-block">
+                <div>
+                    <div class="sign-line">Председатель оргкомитета</div>
+                    <div style="margin-top:32px;" class="sign-line">Подпись, дата</div>
+                </div>
+                <div>
+                    <div class="sign-line">Главный судья соревнований</div>
+                    <div style="margin-top:32px;" class="sign-line">Подпись, дата</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ТРЕТЬЯ СТРАНИЦА: РЕГИСТРАЦИЯ -->
+    <div class="page" id="page-reg">
+        <div class="reg-page">
+            <div class="reg-header">
+                <div class="eyebrow">Парк «Гулливер» · Донецк</div>
+                <h1>Регистрация участников</h1>
+                <p>Заполните форму для участия в турнире</p>
+            </div>
+
+            <div class="reg-form-wrap">
+                <div class="form-section-label">Личные данные</div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Фамилия <span class="req">*</span></label>
+                        <input type="text" id="f-last" placeholder="Иванов">
+                    </div>
+                    <div class="field">
+                        <label>Имя <span class="req">*</span></label>
+                        <input type="text" id="f-first" placeholder="Иван">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Отчество</label>
+                        <input type="text" id="f-mid" placeholder="Иванович">
+                    </div>
+                    <div class="field">
+                        <label>Дата рождения <span class="req">*</span></label>
+                        <input type="date" id="f-dob">
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+                <div class="form-section-label">Контакт и опыт</div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label>Телефон <span class="req">*</span></label>
+                        <input type="tel" id="f-phone" placeholder="+7 (000) 000-00-00">
+                    </div>
+                    <div class="field">
+                        <label>E-mail</label>
+                        <input type="email" id="f-email" placeholder="example@mail.ru">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Опыт игры <span class="req">*</span></label>
+                        <select id="f-level">
+                            <option value="">— выберите —</option>
+                            <option value="beginner">Новичок (играю редко)</option>
+                            <option value="amateur">Любитель (играю регулярно)</option>
+                            <option value="advanced">Продвинутый (есть разряд / занимался в секции)</option>
+                            <option value="pro">Спортсмен (КМС, МС и выше)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Разряд / звание</label>
+                        <input type="text" id="f-rank" placeholder="1 разряд, КМС — или «нет»">
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+                <div class="form-section-label">Заявка на разряд</div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label>Разряд участия <span class="req">*</span></label>
+                        <select id="f-category">
+                            <option value="">— выберите разряд —</option>
+                            <option value="amateurs">Любители (одиночный — все возрасты)</option>
+                            <option value="pros">Профессионалы (одиночный — с разрядом)</option>
+                            <option value="pairs_amateurs">Пары любители (любительский уровень, М+М и М+Ж)</option>
+                            <option value="pairs_pros">Пары профессионалы (с разрядом, М+М и М+Ж)</option>
+                        </select>
+                    </div>
+                    <div class="field" id="pairs-field" style="display:none;">
+                        <label>Наличие партнёра по паре</label>
+                        <select id="f-pairs">
+                            <option value="yes">Партнёр будет назначен оргкомитетом</option>
+                            <option value="yes-own">Партнёр определён</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row full" id="partner-row" style="display:none;">
+                    <div class="field">
+                        <label>Имя и фамилия партнёра по паре</label>
+                        <input type="text" id="f-partner" placeholder="Иванова Мария">
+                        <span class="hint">Если партнёр ещё не зарегистрирован — зарегистрируйтесь сами, партнёр регистрируется отдельно</span>
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+                <div class="form-section-label">Для участников до 14 лет</div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>ФИО родителя / представителя</label>
+                        <input type="text" id="f-parent" placeholder="Иванов Иван Иванович">
+                    </div>
+                    <div class="field">
+                        <label>Телефон родителя / представителя</label>
+                        <input type="tel" id="f-parent-phone" placeholder="+7 (000) 000-00-00">
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+                <div class="form-section-label">Благотворительный взнос в призовой фонд</div>
+                <div style="background:var(--gold-light);border:0.5px solid #e8d5a0;padding:14px 18px;margin-bottom:16px;font-size:13.5px;color:var(--ink-mid);line-height:1.7;">
+                    Взнос — <strong>добровольный</strong>. Все взносы участников объединяются в общий призовой фонд и распределяются между победителями пропорционально месту. Отсутствие взноса не влияет на участие.
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Вид взноса</label>
+                        <select id="f-donation-type">
+                            <option value="none">Не планирую вносить взнос</option>
+                            <option value="money">Денежные средства</option>
+                            <option value="prize">Приз / подарок</option>
+                            <option value="equipment">Спортивный инвентарь</option>
+                            <option value="food">Угощение для участников</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Описание взноса</label>
+                        <input type="text" id="f-donation-desc" placeholder="Сумма, название предмета или описание...">
+                        <span class="hint">Необязательно — можно уточнить при регистрации на месте</span>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="field">
+                        <label>Дополнительно (вопросы, пожелания)</label>
+                        <textarea id="f-note" placeholder="Напишите, если есть особые обстоятельства или вопросы к оргкомитету..."></textarea>
+                    </div>
+                </div>
+
+                <hr class="form-divider">
+
+                <div class="agree-block">
+                    <input type="checkbox" id="agree1">
+                    <label for="agree1">Я ознакомился(ась) с Уставом и Регламентом турнира и принимаю их условия.</label>
+                </div>
+                <div class="agree-block">
+                    <input type="checkbox" id="agree2">
+                    <label for="agree2">Я даю согласие на обработку и публикацию моих персональных данных (ФИО, возраст, результаты) в рамках освещения соревнований.</label>
+                </div>
+                <div class="agree-block">
+                    <input type="checkbox" id="agree3">
+                    <label for="agree3">Я принимаю участие добровольно и беру на себя ответственность за состояние своего здоровья.</label>
+                </div>
+
+                <div id="form-error" style="display:none;background:#fcebeb;border-left:3px solid #e24b4a;padding:12px 16px;margin-bottom:16px;font-size:13.5px;color:#501313;"></div>
+
+                <button class="submit-btn" onclick="submitForm()">Подать заявку на участие</button>
+
+                <div class="success-msg" id="success-msg">
+                    <h3>Заявка принята!</h3>
+                    <p>Спасибо за регистрацию. Ваша заявка принята.<br>До встречи на корте!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЧЕТВЁРТАЯ СТРАНИЦА: АДМИНКА -->
+    <div class="page" id="page-admin">
+        <!-- Экран входа -->
+        <div id="admin-login">
+            <div class="admin-lock">
+                <div class="lock-icon">🔐</div>
+                <h2>Панель администратора</h2>
+                <p>Доступ только для организаторов турнира.<br>Введите пароль для входа.</p>
+                <input type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()">
+                <button class="login-btn" onclick="adminLogin()">Войти</button>
+                <div class="lock-err" id="admin-err">Неверный пароль. Попробуйте ещё раз.</div>
+            </div>
+        </div>
+
+        <!-- Панель после входа -->
+        <div class="admin-panel" id="admin-panel">
+            <div class="admin-panel-wrap">
+
+                <div class="admin-topbar">
+                    <h2>🏓 Панель организатора — Первенство по настольному теннису</h2>
+                    <button class="logout-btn" onclick="adminLogout()">Выйти из панели</button>
+                </div>
+
+                <!-- Статистика -->
+                <div class="admin-stats" id="admin-stats"></div>
+
+                <!-- Призовой фонд -->
+                <div class="prize-fund-block">
+                    <h3>Призовой фонд — распределение</h3>
+                    <div class="prize-dist" id="prize-dist"></div>
+                    <div class="prize-fund-note" id="prize-fund-note"></div>
+                </div>
+
+                <!-- Таблица участников -->
+                <div class="admin-toolbar">
+                    <h3>Список участников</h3>
+                    <div class="toolbar-btns">
+                        <button class="export-btn" onclick="adminExportCSV()">↓ Скачать CSV</button>
+                        <button class="export-btn" onclick="adminExportJSON()">↓ Скачать JSON</button>
+                        <button class="export-btn" onclick="adminPrint()">🖨 Распечатать</button>
+                        <button class="export-btn" style="border-color:#a32d2d;color:#a32d2d;" onclick="adminClearAll()">🗑 Очистить базу</button>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <select id="filter-cat" onchange="renderAdminTable()">
+                        <option value="">Все разряды</option>
+                        <option value="amateurs">Любители</option>
+                        <option value="pros">Профессионалы</option>
+                        <option value="pairs_amateurs">Пары любители</option>
+                        <option value="pairs_pros">Пары профессионалы</option>
+                    </select>
+                    <select id="filter-level" onchange="renderAdminTable()">
+                        <option value="">Все уровни</option>
+                        <option value="beginner">Новичок</option>
+                        <option value="amateur">Любитель</option>
+                        <option value="advanced">Продвинутый</option>
+                        <option value="pro">Спортсмен</option>
+                    </select>
+                    <select id="filter-donation" onchange="renderAdminTable()">
+                        <option value="">Все по взносу</option>
+                        <option value="has">Есть взнос</option>
+                        <option value="none">Без взноса</option>
+                    </select>
+                    <input type="text" id="filter-search" placeholder="Поиск по имени..." oninput="renderAdminTable()" style="flex:1;min-width:160px;">
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table id="admin-table">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>ФИО</th>
+                                <th>Дата рожд.</th>
+                                <th>Телефон</th>
+                                <th>E-mail</th>
+                                <th>Разряд</th>
+                                <th>Уровень / Разряд</th>
+                                <th>Пары</th>
+                                <th>Взнос</th>
+                                <th>Примечание</th>
+                                <th>Дата заявки</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="admin-empty" class="empty-state" style="display:none;">Заявок пока нет.</div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CATEGORY_LABELS = {
+            amateurs: 'Любители',
+            pros: 'Профессионалы',
+            pairs_amateurs: 'Пары любители',
+            pairs_pros: 'Пары профессионалы'
+        };
+        const LEVEL_LABELS = {
+            beginner: 'Новичок',
+            amateur: 'Любитель',
+            advanced: 'Продвинутый',
+            pro: 'Спортсмен'
+        };
+        const DONATION_LABELS = {
+            none: 'Без взноса',
+            money: 'Денежные средства',
+            prize: 'Приз / подарок',
+            equipment: 'Спортивный инвентарь',
+            food: 'Угощение',
+            other: 'Другое'
+        };
+
+        const ADMIN_PASSWORD = 'ghDTfdSTkzESSpBPcJy9';
+        // Токен для DELETE-операций (должен совпадать с ADMIN_TOKEN в env Vercel)
+        const ADMIN_TOKEN = 'ghDTfdSTkzESSpBPcJy9';
+
+        // Используем относительный путь — работает на любом домене Vercel автоматически
+        const API_URL = '/api/registrations';
+
+        // ---- НАВИГАЦИЯ ----
+        function showPage(p) {
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+            const targetPage = document.getElementById('page-' + p);
+            if (targetPage) targetPage.classList.add('active');
+            
+            const idx = {poster:0, charter:1, reg:2, admin:3}[p];
+            const navBtns = document.querySelectorAll('nav button');
+            if (navBtns[idx]) {
+                navBtns[idx].classList.add('active');
+                if (navBtns[idx].scrollIntoView) {
+                    navBtns[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+            }
+
+            // Автоматически прокручиваем вверх при смене страницы (важно для мобильных)
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            if (history.replaceState) {
+                history.replaceState(null, null, '#' + p);
+            }
+
+            if (p === 'admin') {
+                const logged = sessionStorage.getItem('admin_auth') === '1';
+                document.getElementById('admin-login').style.display = logged ? 'none' : 'block';
+                document.getElementById('admin-panel').classList.toggle('visible', logged);
+                if (logged) renderAdminPanel();
+            }
+        }
+
+        // Поддержка прямых ссылок (например #reg) при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = location.hash.replace('#', '').replace('page-', '');
+            if (['poster', 'charter', 'reg', 'admin'].includes(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // ---- ХРАНИЛИЩЕ (localStorage как fallback) ----
+        function getParticipants() {
+            try {
+                return JSON.parse(localStorage.getItem('gulliver_tennis') || '[]');
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function saveParticipants(arr) {
+            try {
+                localStorage.setItem('gulliver_tennis', JSON.stringify(arr));
+            } catch(e) {
+                console.error('Ошибка сохранения в localStorage:', e);
+            }
+        }
+
+        // ---- ЗАГРУЗКА ДАННЫХ С VERCEL KV ----
+        async function loadAllParticipants() {
+            try {
+                const response = await fetch(API_URL, { method: 'GET' });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const json = await response.json();
+                return json.success ? json.data : [];
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                return null;
+            }
+        }
+
+        // ---- ФОРМА РЕГИСТРАЦИИ ----
+        function isPairsCategory(cat) {
+            return cat === 'pairs_amateurs' || cat === 'pairs_pros';
+        }
+
+        function updatePairsFields() {
+            const cat = document.getElementById('f-category').value;
+            const pairsField = document.getElementById('pairs-field');
+            const pairsSelect = document.getElementById('f-pairs');
+            const partnerRow = document.getElementById('partner-row');
+
+            if (isPairsCategory(cat)) {
+                pairsField.style.display = 'flex';
+                partnerRow.style.display = (pairsSelect.value === 'yes-own') ? 'grid' : 'none';
+            } else {
+                pairsField.style.display = 'none';
+                partnerRow.style.display = 'none';
+                pairsSelect.value = 'yes';
+                document.getElementById('f-partner').value = '';
+            }
+        }
+
+        document.getElementById('f-category').addEventListener('change', updatePairsFields);
+        document.getElementById('f-pairs').addEventListener('change', updatePairsFields);
+
+        async function submitForm() {
+            const last  = document.getElementById('f-last').value.trim();
+            const first = document.getElementById('f-first').value.trim();
+            const dob   = document.getElementById('f-dob').value;
+            const phone = document.getElementById('f-phone').value.trim();
+            const level = document.getElementById('f-level').value;
+            const cat   = document.getElementById('f-category').value;
+            const a1    = document.getElementById('agree1').checked;
+            const a2    = document.getElementById('agree2').checked;
+            const a3    = document.getElementById('agree3').checked;
+            const errEl = document.getElementById('form-error');
+
+            let errors = [];
+            if (!last || !first) errors.push('Укажите фамилию и имя.');
+            if (!dob) errors.push('Укажите дату рождения.');
+            if (!phone) errors.push('Укажите контактный телефон.');
+            if (!level) errors.push('Выберите уровень игры.');
+            if (!cat) errors.push('Выберите категорию разряда.');
+            if (!a1 || !a2 || !a3) errors.push('Необходимо принять все условия участия.');
+
+            if (errors.length) {
+                errEl.style.display = 'block';
+                errEl.innerHTML = errors.join('<br>');
+                errEl.scrollIntoView({behavior:'smooth', block:'center'});
+                return;
+            }
+            errEl.style.display = 'none';
+
+            const pairs = document.getElementById('f-pairs').value;
+            const donationType = document.getElementById('f-donation-type').value;
+            const participant = {
+                last, first,
+                mid: document.getElementById('f-mid').value.trim(),
+                dob,
+                phone,
+                email: document.getElementById('f-email').value.trim(),
+                level,
+                rank: document.getElementById('f-rank').value.trim(),
+                category: cat,
+                pairs,
+                partner: document.getElementById('f-partner').value.trim(),
+                parent: document.getElementById('f-parent').value.trim(),
+                donationType,
+                donationDesc: document.getElementById('f-donation-desc').value.trim(),
+                note: document.getElementById('f-note').value.trim(),
+                ip: window.location.hostname,
+                userAgent: navigator.userAgent,
+                ts: new Date().toLocaleString('ru-RU')
+            };
+
+            // Показываем индикатор загрузки
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true;
+
+            try {
+                const resp = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(participant)
+                });
+                if (!resp.ok) throw new Error('Сервер вернул ошибку: ' + resp.status);
+
+                const result = await resp.json();
+                if (result && result.success) {
+                    participant.id = result.id;
+                    participant.num = result.count;
+                }
+
+                // Сохраняем в localStorage как резервную копию
+                const list = getParticipants();
+                list.push(participant);
+                saveParticipants(list);
+
+                document.getElementById('success-msg').style.display = 'block';
+                document.getElementById('success-msg').scrollIntoView({behavior:'smooth', block:'center'});
+
+                // Очищаем форму
+                ['f-last','f-first','f-mid','f-dob','f-phone','f-email','f-rank','f-partner','f-parent','f-parent-phone','f-note','f-donation-desc'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                ['f-level','f-category'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                document.getElementById('f-donation-type').value = 'none';
+                document.getElementById('f-pairs').value = 'yes';
+                ['agree1','agree2','agree3'].forEach(id => {
+                    document.getElementById(id).checked = false;
+                });
+                document.getElementById('pairs-field').style.display = 'none';
+                document.getElementById('partner-row').style.display = 'none';
+
+            } catch (error) {
+                console.error('Ошибка отправки:', error);
+                // fallback - сохраняем локально
+                const list = getParticipants();
+                if (!participant.id) participant.id = `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+                if (!participant.num) participant.num = list.length + 1;
+                list.push(participant);
+                saveParticipants(list);
+                document.getElementById('success-msg').style.display = 'block';
+                document.getElementById('success-msg').scrollIntoView({behavior:'smooth', block:'center'});
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ---- АДМИН: ВХОД / ВЫХОД ----
+        function adminLogin() {
+            const val = document.getElementById('admin-pass').value;
+            if (val === ADMIN_PASSWORD) {
+                sessionStorage.setItem('admin_auth', '1');
+                document.getElementById('admin-err').style.display = 'none';
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').classList.add('visible');
+                renderAdminPanel();
+            } else {
+                document.getElementById('admin-err').style.display = 'block';
+                document.getElementById('admin-pass').value = '';
+                document.getElementById('admin-pass').focus();
+            }
+        }
+
+        function adminLogout() {
+            sessionStorage.removeItem('admin_auth');
+            document.getElementById('admin-panel').classList.remove('visible');
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-pass').value = '';
+        }
+
+        // ---- АДМИН: ПАНЕЛЬ ----
+        async function renderAdminPanel() {
+            // Показываем индикатор загрузки
+            document.getElementById('admin-stats').innerHTML = '<div class="stat-card"><div class="s-label">Загрузка...</div></div>';
+            document.getElementById('prize-dist').innerHTML = '<div>Загрузка данных...</div>';
+            document.getElementById('prize-fund-note').textContent = 'Загрузка данных...';
+
+            try {
+                // Загружаем данные с Vercel KV через API
+                const serverData = await loadAllParticipants();
+                let participants = [];
+                if (Array.isArray(serverData)) {
+                    participants = serverData;
+                } else {
+                    // Fallback на localStorage если сервер недоступен
+                    participants = getParticipants();
+                }
+
+                if (participants.length === 0) {
+                    document.getElementById('admin-stats').innerHTML =
+                        statCard('Всего заявок', 0, '') +
+                        statCard('Со взносом', 0, 'участников') +
+                        statCard('Без взноса', 0, 'участников') +
+                        statCard('Топ-категория', '—', '');
+
+                    document.getElementById('prize-dist').innerHTML = '';
+                    document.getElementById('prize-fund-note').textContent = 'Заявок пока нет.';
+                    document.getElementById('admin-tbody').innerHTML = '';
+                    document.getElementById('admin-empty').style.display = 'block';
+                    return;
+                }
+
+                // Статистика
+                const withDonation = participants.filter(p => p.donationType && p.donationType !== 'none');
+                const catCounts = {};
+                participants.forEach(p => { catCounts[p.category] = (catCounts[p.category]||0)+1; });
+                const topCat = Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+
+                document.getElementById('admin-stats').innerHTML =
+                    statCard('Всего заявок', participants.length, '') +
+                    statCard('Со взносом', withDonation.length, 'участников') +
+                    statCard('Без взноса', participants.length - withDonation.length, 'участников') +
+                    statCard('Топ-категория', topCat ? CATEGORY_LABELS[topCat[0]] : '—', topCat ? topCat[1]+' чел.' : '');
+
+                // Призовой фонд
+                const moneyDonors = withDonation.filter(p => p.donationType === 'money');
+                const otherDonors = withDonation.filter(p => p.donationType !== 'money');
+
+                const distEl = document.getElementById('prize-dist');
+                const dists = [
+                    {place:'1-е место', pct:50, color:'var(--gold)'},
+                    {place:'2-е место', pct:30, color:'#888'},
+                    {place:'3-е место', pct:20, color:'#c8763a'},
+                ];
+                distEl.innerHTML = dists.map(d =>
+                    '<div class="prize-dist-item">' +
+                    '<div class="pd-place">' + d.place + '</div>' +
+                    '<div class="pd-pct" style="color:' + d.color + '">' + d.pct + '%</div>' +
+                    '<div class="pd-amt">от общего фонда</div>' +
+                    '</div>'
+                ).join('');
+
+                let noteText = 'Взносы в призовой фонд: ' + withDonation.length + ' участника(ов).';
+                if (moneyDonors.length) {
+                    noteText += ' Денежные взносы: ' + moneyDonors.map(p => (p.donationDesc || 'не указано') + ' (' + [p.last, p.first].join(' ') + ')').join('; ') + '.';
+                }
+                if (otherDonors.length) {
+                    noteText += ' Неденежные взносы: ' + otherDonors.map(p => (DONATION_LABELS[p.donationType]||p.donationType) + (p.donationDesc ? ' — ' + p.donationDesc : '') + ' (' + [p.last, p.first].join(' ') + ')').join('; ') + '.';
+                }
+                if (!withDonation.length) noteText += ' Взносов пока нет.';
+                document.getElementById('prize-fund-note').textContent = noteText;
+
+                renderAdminTable(participants);
+            } catch (error) {
+                console.error('Ошибка при загрузке данных:', error);
+                document.getElementById('admin-stats').innerHTML = '<div class="stat-card"><div class="s-label">Ошибка загрузки</div></div>';
+                document.getElementById('prize-dist').innerHTML = '<div>Используется локальный кэш</div>';
+                document.getElementById('prize-fund-note').textContent = 'Загрузка из кэша...';
+                renderAdminTable(getParticipants());
+            }
+        }
+
+        function statCard(label, val, sub) {
+            return '<div class="stat-card"><div class="s-label">' + label + '</div><div class="s-val">' + val + '</div>' + (sub ? '<div class="s-sub">' + sub + '</div>' : '') + '</div>';
+        }
+
+        async function renderAdminTable(participants) {
+            if (!participants) participants = getParticipants();
+
+            const filterCat = document.getElementById('filter-cat') ? document.getElementById('filter-cat').value : '';
+            const filterLevel = document.getElementById('filter-level') ? document.getElementById('filter-level').value : '';
+            const filterDon = document.getElementById('filter-donation') ? document.getElementById('filter-donation').value : '';
+            const search = document.getElementById('filter-search') ? document.getElementById('filter-search').value.toLowerCase() : '';
+
+            let filteredList = participants;
+            if (filterCat) filteredList = filteredList.filter(p => p.category === filterCat);
+            if (filterLevel) filteredList = filteredList.filter(p => p.level === filterLevel);
+            if (filterDon === 'has') filteredList = filteredList.filter(p => p.donationType && p.donationType !== 'none');
+            if (filterDon === 'none') filteredList = filteredList.filter(p => !p.donationType || p.donationType === 'none');
+            if (search) filteredList = filteredList.filter(p => [p.last,p.first,p.mid,p.phone,p.email].join(' ').toLowerCase().includes(search));
+
+            const tbody = document.getElementById('admin-tbody');
+            const empty = document.getElementById('admin-empty');
+
+            if (!filteredList.length) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            tbody.innerHTML = filteredList.map(p => {
+                const name = [p.last, p.first, p.mid].filter(Boolean).join(' ');
+                const isPair = (p.category === 'pairs_amateurs' || p.category === 'pairs_pros');
+                const pairLabel = !isPair ? '—' : (p.pairs === 'yes-own' ? 'Партнёр: ' + (p.partner||'?') : 'Партнёр назначается');
+                const don = (!p.donationType || p.donationType === 'none')
+                    ? '<span style="color:var(--ink-muted);font-size:12px;">—</span>'
+                    : '<span class="donation-tag">' + (DONATION_LABELS[p.donationType]||p.donationType) + '</span>' + (p.donationDesc ? '<br><span style="font-size:11px;color:var(--ink-muted);">' + esc(p.donationDesc) + '</span>' : '');
+                const idVal = esc(p.id || '');
+                return '<tr>' +
+                    '<td>' + (p.num || '—') + '</td>' +
+                    '<td><strong style="color:var(--ink);font-weight:500;">' + esc(name) + '</strong>' + (p.parent ? '<br><span style="font-size:11px;color:var(--ink-muted);">Родитель: ' + esc(p.parent) + '</span>' : '') + '</td>' +
+                    '<td style="white-space:nowrap;">' + (p.dob||'—') + '</td>' +
+                    '<td style="white-space:nowrap;">' + esc(p.phone) + '</td>' +
+                    '<td style="font-size:12px;">' + esc(p.email||'—') + '</td>' +
+                    '<td>' + (CATEGORY_LABELS[p.category]||p.category) + '</td>' +
+                    '<td>' + (LEVEL_LABELS[p.level]||p.level) + (p.rank ? '<br><span style="font-size:11px;color:var(--ink-muted);">' + esc(p.rank) + '</span>' : '') + '</td>' +
+                    '<td style="font-size:12px;">' + pairLabel + '</td>' +
+                    '<td>' + don + '</td>' +
+                    '<td style="font-size:12px;color:var(--ink-muted);">' + esc(p.note||'—') + '</td>' +
+                    '<td style="font-size:11px;color:var(--ink-muted);white-space:nowrap;">' + (p.ts||'—') + '</td>' +
+                    '<td><button class="del-btn" onclick="adminDelete(\'' + idVal + '\')" title="Удалить">×</button></td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function esc(str) {
+            return String(str||'')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        async function adminDelete(id) {
+            if (!confirm('Удалить эту заявку?')) return;
+            try {
+                const resp = await fetch(API_URL + '?id=' + encodeURIComponent(id), {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Token': ADMIN_TOKEN }
+                });
+                const json = await resp.json();
+                if (!json.success) throw new Error(json.message);
+                // Также убираем из localStorage
+                const list = getParticipants().filter(p => p.id !== String(id));
+                saveParticipants(list);
+            } catch (e) {
+                console.error('Ошибка удаления:', e);
+                alert('Ошибка удаления: ' + e.message);
+            }
+            renderAdminPanel();
+        }
+
+        async function adminClearAll() {
+            if (!confirm('Удалить ВСЕ заявки? Это действие необратимо.')) return;
+            try {
+                const resp = await fetch(API_URL + '?id=all', {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Token': ADMIN_TOKEN }
+                });
+                const json = await resp.json();
+                if (!json.success) throw new Error(json.message);
+                localStorage.removeItem('gulliver_tennis');
+            } catch (e) {
+                console.error('Ошибка очистки:', e);
+                alert('Ошибка: ' + e.message);
+            }
+            renderAdminPanel();
+        }
+
+        async function adminExportCSV() {
+            let list = await loadAllParticipants();
+            if (!list || !list.length) list = getParticipants();
+            if (!list.length) { alert('Список участников пуст.'); return; }
+            const headers = ['№','Фамилия','Имя','Отчество','Дата рождения','Телефон','E-mail',
+                'Категория','Уровень','Разряд','Пары','Партнёр','Родитель',
+                'Вид взноса','Описание взноса','Примечание','Дата регистрации'];
+            const rows = list.map(p => [
+                p.num, p.last, p.first, p.mid, p.dob, p.phone, p.email,
+                CATEGORY_LABELS[p.category]||p.category,
+                LEVEL_LABELS[p.level]||p.level,
+                p.rank, p.pairs, p.partner, p.parent,
+                DONATION_LABELS[p.donationType]||p.donationType||'—',
+                p.donationDesc, p.note, p.ts
+            ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(','));
+            const csv = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+            downloadBlob(csv, 'text/csv;charset=utf-8;', 'uchastniki_tennis_gulliver.csv');
+        }
+
+        async function adminExportJSON() {
+            let list = await loadAllParticipants();
+            if (!list || !list.length) list = getParticipants();
+            if (!list.length) { alert('Список участников пуст.'); return; }
+            downloadBlob(JSON.stringify({
+                export_date: new Date().toLocaleString('ru-RU'),
+                count: list.length,
+                participants: list
+            }, null, 2), 'application/json', 'uchastniki_tennis_gulliver.json');
+        }
+
+        function downloadBlob(content, type, filename) {
+            const blob = new Blob([content], {type});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename; a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function adminPrint() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
