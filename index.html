@@ -593,6 +593,14 @@
             box-shadow: 0 0 0 3px rgba(26,92,42,0.08);
         }
 
+        /* iOS Safari: поле даты с appearance:none схлопывается — фиксируем высоту */
+        .field input[type="date"] {
+            min-height: 42px;
+            display: block;
+            width: 100%;
+            -webkit-min-logical-height: 42px;
+        }
+
         .field select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b6b62' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -1099,6 +1107,13 @@
             .info-grid, .categories-list, .form-row, .sign-block { grid-template-columns: 1fr; }
             .form-row.three { grid-template-columns: 1fr 1fr; }
             .prize-row { gap: 12px; }
+
+            /* 16px — отключает автозум при фокусе на поле в iOS Safari */
+            .field input, .field select, .field textarea,
+            .filter-row select, .filter-row input,
+            .admin-lock input[type=password] {
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1934,13 +1949,17 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(participant)
                 });
-                if (!resp.ok) throw new Error('Сервер вернул ошибку: ' + resp.status);
 
-                const result = await resp.json();
-                if (result && result.success) {
-                    participant.id = result.id;
-                    participant.num = result.count;
+                let result = null;
+                try { result = await resp.json(); } catch (e) {}
+
+                if (!resp.ok || !result || !result.success) {
+                    const serverMsg = (result && result.message) ? result.message : ('Сервер вернул ошибку: ' + resp.status);
+                    throw new Error(serverMsg);
                 }
+
+                participant.id = result.id;
+                participant.num = result.count;
 
                 // Сохраняем в localStorage как резервную копию
                 const list = getParticipants();
@@ -1967,14 +1986,12 @@
 
             } catch (error) {
                 console.error('Ошибка отправки:', error);
-                // fallback - сохраняем локально
-                const list = getParticipants();
-                if (!participant.id) participant.id = `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-                if (!participant.num) participant.num = list.length + 1;
-                list.push(participant);
-                saveParticipants(list);
-                document.getElementById('success-msg').style.display = 'block';
-                document.getElementById('success-msg').scrollIntoView({behavior:'smooth', block:'center'});
+                // Показываем реальную ошибку — заявка НЕ сохранена на сервере
+                errEl.style.display = 'block';
+                errEl.innerHTML = '<strong>Не удалось отправить заявку на сервер.</strong><br>' +
+                    esc(error.message) +
+                    '<br>Проверьте подключение к интернету и попробуйте ещё раз. Если ошибка повторяется — свяжитесь с оргкомитетом.';
+                errEl.scrollIntoView({behavior:'smooth', block:'center'});
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -2199,8 +2216,9 @@
                 p.rank, p.pairs, p.partner, p.parent,
                 DONATION_LABELS[p.donationType]||p.donationType||'—',
                 p.donationDesc, p.note, p.ts
-            ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(','));
-            const csv = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+            ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(';'));
+            // Разделитель ";" — русский Excel корректно разбивает колонки
+            const csv = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
             downloadBlob(csv, 'text/csv;charset=utf-8;', 'uchastniki_tennis_gulliver.csv');
         }
 
